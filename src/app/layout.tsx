@@ -21,7 +21,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body>
+      <body className="scroll-smooth overflow-x-hidden p-0 m-0">
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
     </html>

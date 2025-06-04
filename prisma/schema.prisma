@@ -10,11 +10,49 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+    id String @id @default(cuid())
 
-    @@index([name])
+    email          String @unique
+    name           String
+    hashedPassword String
+    role           Role     @default(CUSTOMER) 
+
+    createdAt DateTime @default(now())
+     provider       Provider?
+}
+
+model Service {
+    id          String  @id @default(cuid())
+    name        String
+    description String?
+
+    price            String
+    category        String
+    image            String?
+    reviewStarRating String   @default("0.0")
+    duration         String   @default("0") // Duration in minutes
+    reviewCount      String   @default("0")
+    review           String?
+    providerId       String
+    provider         Provider @relation("ProviderServices", fields: [providerId], references: [id])
+
+    createdAt DateTime @default(now())
+}
+
+model Provider {
+    id          String  @id @default(cuid())
+    name        String
+    description String?
+    userId    String  @unique
+  user      User    @relation(fields: [userId], references: [id])
+
+    createdAt DateTime @default(now())
+
+    services Service[] @relation("ProviderServices")
+}
+
+enum Role {
+  CUSTOMER
+  PROVIDER
 }
