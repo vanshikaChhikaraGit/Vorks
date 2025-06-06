@@ -128,7 +128,7 @@ export const serviceRouter = createTRPCRouter({
       serviceId:z.string()
     })
   ).query(async({ctx,input})=>{
-    return await ctx.db.service.findMany({
+    return await ctx.db.service.findUnique({
       where:{
         id:input.serviceId
       }

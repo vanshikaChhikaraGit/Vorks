@@ -29,7 +29,8 @@ model Service {
     category         String
     location         String
     image            String?
-    reviewStarRating String?    
+    reviewStarRating String? @default("0.0")  // average of totals stars recieved ex:- 5 people gave 4 stars then reviewCount = 4
+    reviewCount      String?  @default("0") //number of reviews
     duration         String   @default("0")
     providerId       String
     provider         Provider @relation("ProviderServices", fields: [providerId], references: [id])
