@@ -15,23 +15,33 @@ import { zodResolver } from '@hookform/resolvers/zod'
 type signupFormData = z.infer<typeof signupSchema>
 
 export default function SignupPage() {
-  const { register,handleSubmit, formState:{errors}} = useForm<signupFormData>({
-    resolver:zodResolver(signupSchema)
+  const { register,handleSubmit, formState:{errors},watch} = useForm<signupFormData>({
+    resolver:zodResolver(signupSchema),
+    defaultValues: {
+      role: 'CUSTOMER' // Default to customer
+    }
   })
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false) // State for toggle
+const selectedRole = watch('role')
 
   async function handleOnSubmit(data: signupFormData) {
-    const { name, email, password } = data
+    const { name, email, password,role } = data
+
+    console.log(data)
 
     const response = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password,name }),
+      body: JSON.stringify({ email, password,name,role }),
     })
 
     if (response.ok) {
-      router.push('/home')
+    if (role === 'PROVIDER') {
+        router.push('/provider')
+      } else {
+        router.push('/home')
+      }
     } else {
       const errorData = await response.json()
       // Handle errors, e.g., show a notification or alert
@@ -95,6 +105,31 @@ export default function SignupPage() {
               {errors.password && (
                 <p className='text-red-500 p-2'>{errors.password.message}</p>
               )}
+            </div>
+
+            {/* //role  */}
+
+            <div className="flex gap-4">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  {...register('role')}
+                  value="CUSTOMER"
+                  className="form-radio"
+                  checked={selectedRole === 'CUSTOMER'}
+                />
+                <span>Customer</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  {...register('role')}
+                  value="PROVIDER"
+                  className="form-radio"
+                  checked={selectedRole === 'PROVIDER'}
+                />
+                <span>Provider</span>
+              </label>
             </div>
 
             <Button type='submit' variant={'default'} className='w-full'>

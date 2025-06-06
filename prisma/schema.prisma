@@ -11,45 +11,54 @@ datasource db {
 }
 
 model User {
-    id String @id @default(cuid())
-
-    email          String @unique
+    id             String   @id @default(cuid())
+    email          String   @unique
     name           String
     hashedPassword String
-    role           Role     @default(CUSTOMER) 
-
-    createdAt DateTime @default(now())
-     provider       Provider?
+    role           Role     @default(CUSTOMER)
+    createdAt      DateTime @default(now())
+    provider       Provider?
+    comments       Comment[] // Added relationship to comments
 }
 
 model Service {
-    id          String  @id @default(cuid())
-    name        String
-    description String?
-
+    id               String   @id @default(cuid())
+    name             String
+    description      String?
     price            String
-    category        String
+    category         String
     image            String?
-    reviewStarRating String   @default("0.0")
-    duration         String   @default("0") // Duration in minutes
-    reviewCount      String   @default("0")
-    review           String?
+    reviewStarRating String?    
+    duration         String   @default("0")
     providerId       String
     provider         Provider @relation("ProviderServices", fields: [providerId], references: [id])
-
-    createdAt DateTime @default(now())
+    comments         Comment[] @relation("ServiceComments") // Added relationship to comments
+    createdAt        DateTime @default(now())
 }
 
 model Provider {
-    id          String  @id @default(cuid())
+    id          String   @id @default(cuid())
     name        String
     description String?
-    userId    String  @unique
-  user      User    @relation(fields: [userId], references: [id])
+    userId      String   @unique
+    user        User     @relation(fields: [userId], references: [id])
+    services    Service[] @relation("ProviderServices")
+    createdAt   DateTime @default(now())
+}
 
-    createdAt DateTime @default(now())
-
-    services Service[] @relation("ProviderServices")
+// New model for comments/reviews
+model Comment {
+    id         String   @id @default(cuid())
+    content    String
+    rating     String     
+    userId     String
+    user       User     @relation(fields: [userId], references: [id])
+    serviceId  String
+    service    Service  @relation("ServiceComments", fields: [serviceId], references: [id])
+    createdAt  DateTime @default(now())
+    
+    @@index([userId]) // For faster queries by user
+    @@index([serviceId]) // For faster queries by service
 }
 
 enum Role {
