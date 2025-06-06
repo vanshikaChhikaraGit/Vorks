@@ -27,6 +27,7 @@ model Service {
     description      String?
     price            String
     category         String
+    location         String
     image            String?
     reviewStarRating String?    
     duration         String   @default("0")

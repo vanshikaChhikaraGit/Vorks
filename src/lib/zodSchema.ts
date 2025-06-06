@@ -19,4 +19,5 @@ export const createServiceSchema = z.object({
   category: z.string().min(1, "Category is required"),
   duration: z.string().min(1, "Duration is required"),
   image: z.string(),
+  serviceLocation:z.string().min(1,"Location of service is required")
 })

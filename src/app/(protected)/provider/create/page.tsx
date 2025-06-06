@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createServiceSchema } from "@/lib/zodSchema";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -55,14 +55,15 @@ const category = watch("category");
 
   const onSubmit = (data: ServiceFormData) => {
     console.log("Form data:", data);
-    const { serviceName, description, price, category, duration, image } = data;
+    const { serviceName, description, price, category, duration, image,serviceLocation } = data;
     const uploadServiceToDB = uploadService.mutateAsync({
         category,
         price,
         duration,
         description,
         image,
-        serviceName
+        serviceName,
+        serviceLocation
     })
   };
 
@@ -107,6 +108,19 @@ const category = watch("category");
                 {errors.price && (
                   <p className="mt-1 text-sm text-red-500">
                     {errors.price.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Input
+                {...register('serviceLocation')}
+                  type="text"
+                  placeholder="Location"
+                  className="w-full rounded border p-2"
+                />
+                {errors.serviceLocation && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.serviceLocation.message}
                   </p>
                 )}
               </div>

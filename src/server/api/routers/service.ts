@@ -8,6 +8,7 @@ export const serviceRouter = createTRPCRouter({
   create: publicProcedure
     .input(
       z.object({
+        serviceLocation:z.string().min(1),
         serviceName: z.string().min(1),
         description: z.string().min(1),
         price: z.string().min(0),
@@ -46,6 +47,7 @@ export const serviceRouter = createTRPCRouter({
           category: input.category,
           duration: input.duration,
           image: input.image,
+          location:input.serviceLocation
         },
       });
     }),
@@ -109,5 +111,28 @@ export const serviceRouter = createTRPCRouter({
         providerId: provider.id,
       },
     });
+  }),
+  getServiceByCategory: publicProcedure.input(
+    z.object({
+      category:z.string()
+    })
+  ).query(async({ctx,input})=>{
+    return await ctx.db.service.findMany({
+      where:{
+        category:input.category
+      }
+    })
+  }),
+   getServiceById: publicProcedure.input(
+    z.object({
+      serviceId:z.string()
+    })
+  ).query(async({ctx,input})=>{
+    return await ctx.db.service.findMany({
+      where:{
+        id:input.serviceId
+      }
+    })
   })
+  
 });

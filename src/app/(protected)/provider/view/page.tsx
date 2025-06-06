@@ -1,7 +1,10 @@
 'use client'
 
+import { Button } from '@/components/ui/button';
 import { api } from '@/trpc/react'
+import { MapPin, Timer } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react'
 
 const ViewServices = () => {
@@ -27,7 +30,6 @@ const ViewServices = () => {
           {/* Service Details */}
           <div className="p-4">
             <h1 className="text-xl font-bold">{service.name}</h1>
-            <p className="text-gray-600 mt-2">{service.description}</p>
             
             {/* Price & Rating */}
             <div className="mt-3 flex justify-between items-center">
@@ -40,10 +42,15 @@ const ViewServices = () => {
 
             {/* Duration & CTA Button */}
             <div className="mt-4 flex justify-between items-center">
-              <span className="text-sm text-gray-500">・{service.duration} Minutes</span>
-              
+              <span className="text-sm text-gray-700 font-semibold flex items-center"><Timer />{service.duration} Minutes</span>
+              <span className="text-sm text-gray-700 font-semibold flex items-center "> <MapPin />{service.location}</span>
             </div>
           </div>
+          <Link href={`/service/${service.id}`} className='p-2'>
+            <Button className='w-full '>
+              View Details
+            </Button>
+            </Link>
         </div>
       ))}
     </div>

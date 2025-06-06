@@ -6,6 +6,11 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+   productionBrowserSourceMaps: true, // For production
+  webpack: (config) => {
+    config.devtool = 'eval-source-map' // For development
+
+  },
    images:{
      remotePatterns: [
       {

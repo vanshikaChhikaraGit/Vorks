@@ -10,7 +10,7 @@ import { useCart } from '@/context/cart'
 const DefaultNavbar = () => {
     const {cart} = useCart()
   return (
-    <div className='flex justify-between items-center p-4 bg-[#EBEDE8]'>
+    <div className='flex justify-between items-center p-4'>
         {/* logo and name  */}
         <div>
             <Image src="/logo_vorks.png" alt="Logo" width={50} height={50} className="inline-block mr-2" />
