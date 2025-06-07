@@ -1,66 +1,128 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id             String   @id @default(cuid())
-    email          String   @unique
-    name           String
-    hashedPassword String
-    role           Role     @default(CUSTOMER)
-    createdAt      DateTime @default(now())
-    provider       Provider?
-    comments       Comment[] // Added relationship to comments
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name           String
+  hashedPassword String
+  role           Role     @default(CUSTOMER)
+  createdAt      DateTime @default(now())
+  provider       Provider?
+  orders         Order[]
+  comments       Comment[]
 }
 
 model Service {
-    id               String   @id @default(cuid())
-    name             String
-    description      String?
-    price            String
-    category         String
-    location         String
-    image            String?
-    reviewStarRating String? @default("0.0")  // average of totals stars recieved ex:- 5 people gave 4 stars then reviewCount = 4
-    reviewCount      String?  @default("0") //number of reviews
-    duration         String   @default("0")
-    providerId       String
-    provider         Provider @relation("ProviderServices", fields: [providerId], references: [id])
-    comments         Comment[] @relation("ServiceComments") // Added relationship to comments
-    createdAt        DateTime @default(now())
+  id               String     @id @default(cuid())
+  name             String
+  description      String?
+  price            String
+  category         String
+  location         String
+  image            String?
+  reviewStarRating String?    @default("0.0")
+  reviewCount      String?    @default("0")
+  duration         String     @default("0")
+  providerId       String
+  provider         Provider   @relation("ProviderServices", fields: [providerId], references: [id])
+  comments         Comment[]  @relation("ServiceComments")
+  orderItems       OrderItem[]
+  createdAt        DateTime   @default(now())
 }
 
 model Provider {
-    id          String   @id @default(cuid())
-    name        String
-    description String?
-    userId      String   @unique
-    user        User     @relation(fields: [userId], references: [id])
-    services    Service[] @relation("ProviderServices")
-    createdAt   DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  services    Service[] @relation("ProviderServices")
+  createdAt   DateTime @default(now())
 }
 
-// New model for comments/reviews
 model Comment {
-    id         String   @id @default(cuid())
-    content    String
-    rating     String     
-    userId     String
-    user       User     @relation(fields: [userId], references: [id])
-    serviceId  String
-    service    Service  @relation("ServiceComments", fields: [serviceId], references: [id])
-    createdAt  DateTime @default(now())
-    
-    @@index([userId]) // For faster queries by user
-    @@index([serviceId]) // For faster queries by service
+  id         String   @id @default(cuid())
+  content    String
+  rating     String
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  serviceId  String
+  service    Service  @relation("ServiceComments", fields: [serviceId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([serviceId])
+}
+
+model Order {
+  id              String     @id @default(cuid())
+  userId          String
+  transactionId   String
+  user            User       @relation(fields: [userId], references: [id])
+  amount          Float
+  tax             Float
+  totalAmount     Float
+  status          OrderStatus @default(PENDING)
+  paymentStatus   PaymentStatus @default(PENDING)
+  razorpayOrderId String?
+  razorpayPaymentId String?
+  items           OrderItem[]
+  payments        Payment[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  serviceId   String
+  service     Service  @relation(fields: [serviceId], references: [id])
+  quantity    Int
+  price       Float
+  duration    String
+  createdAt   DateTime @default(now())
+}
+
+model Payment {
+  id              String   @id @default(cuid())
+  orderId         String
+  order           Order    @relation(fields: [orderId], references: [id])
+  razorpayOrderId String
+  razorpayPaymentId String
+  amount          Float
+  currency        String   @default("INR")
+  status          PaymentStatus
+  method          String?
+  bank            String?
+  wallet          String?
+  vpa             String?
+  cardId          String?
+  signature       String?
+  createdAt       DateTime @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+enum PaymentStatus {
+  PENDING
+  CAPTURED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
 }
 
 enum Role {

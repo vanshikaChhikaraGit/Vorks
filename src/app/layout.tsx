@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "sonner";
+import { CartProvider } from "@/context/cart";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -23,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body className="scroll-smooth overflow-x-hidden p-0 m-0">
+        <CartProvider>
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Toaster></Toaster>
+        </CartProvider>
       </body>
     </html>
   );

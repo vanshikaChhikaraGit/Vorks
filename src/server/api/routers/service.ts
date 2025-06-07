@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { cookies } from "next/headers";
 import { TRPCError } from "@trpc/server";
+import { db } from "@/server/db";
 
 export const serviceRouter = createTRPCRouter({
   create: publicProcedure
@@ -123,16 +124,111 @@ export const serviceRouter = createTRPCRouter({
       }
     })
   }),
-   getServiceById: publicProcedure.input(
-    z.object({
-      serviceId:z.string()
+    getServiceById: publicProcedure
+    .input(z.object({ serviceId: z.string() }))
+    .query(async ({ ctx,input }) => {
+      const { serviceId } = input;
+
+      const serviceWithReviews = await ctx.db.service.findUnique({
+        where: { id: serviceId },
+        include: {
+          comments: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  // Add other user fields you want to display
+                },
+              },
+            },
+            orderBy: {
+              createdAt: 'desc', // Newest first
+            },
+          },
+        },
+      });
+
+      if (!serviceWithReviews) {
+        throw new Error('Service not found');
+      }
+
+      return {
+        service: {
+          id:serviceWithReviews.id,
+          name     :serviceWithReviews.name,
+  description      :serviceWithReviews.description,
+  price            :serviceWithReviews.price,
+  category         :serviceWithReviews.category,
+  location         :serviceWithReviews.location,
+  image            :serviceWithReviews.image,
+  reviewStarRating :serviceWithReviews.reviewStarRating,   
+  reviewCount      :serviceWithReviews.reviewCount,  
+  duration         :serviceWithReviews.duration,   
+  providerId       :serviceWithReviews.providerId,
+        },
+        comments: serviceWithReviews.comments.map(comment => ({
+          id: comment.id,
+          content: comment.content,
+          rating: comment.rating,
+          createdAt: comment.createdAt,
+          user: comment.user,
+        })),
+      };
+    }),
+
+  addReviewByUser: publicProcedure.input(z.object({
+    serviceId:z.string(),
+    rating:z.number(),
+    comment:z.string()
+  })).mutation(async({ctx,input})=>{
+     const cookie = await cookies();
+    const userId = cookie.get("userId")?.value;
+
+    if (!userId) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "User ID not found in cookies",
+      });
+    }
+    //create the comment model
+    await ctx.db.comment.create({
+      data:{
+        content:input.comment,
+        rating:input.rating.toString(),
+        userId:userId,
+        serviceId:input.serviceId
+      }
     })
-  ).query(async({ctx,input})=>{
-    return await ctx.db.service.findUnique({
+
+    const service = await ctx.db.service.findUnique({
       where:{
         id:input.serviceId
       }
     })
-  })
-  
+
+    if(!service){
+      throw new Error('service not found')
+    }
+
+    const currentRating = parseFloat(service.reviewStarRating || '0');
+        const currentCount = parseInt(service.reviewCount || '0');
+        
+        const newCount = currentCount + 1;
+        const newRating = ((currentRating * currentCount) + input.rating) / newCount;
+
+        const updatedService = await ctx.db.service.update({
+          where: { id: input.serviceId as string },
+          data: {
+            reviewStarRating: newRating.toFixed(1),
+            reviewCount: newCount.toString(),
+          },
+        });
+
+         return ({
+        service:updatedService,
+
+      })
+      })
 });
