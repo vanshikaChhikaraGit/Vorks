@@ -6,28 +6,22 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
-  typescript:{
-        ignoreBuildErrors:true
-    },
-    eslint:{
-        ignoreDuringBuilds:true
-    },
-   productionBrowserSourceMaps: true, // For production
-  webpack: (config) => {
-    config.devtool = 'eval-source-map' // For development
-
+  typescript: {
+    ignoreBuildErrors: true
   },
-   images:{
-     remotePatterns: [
+  eslint: {
+    ignoreDuringBuilds: true
+  },
+  productionBrowserSourceMaps: true,
+  images: {
+    remotePatterns: [
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-        port: '',
         pathname: '/dg881ug7n/**',
-        search: '',
       },
     ],
   },
-   };
+};
 
 export default config;
