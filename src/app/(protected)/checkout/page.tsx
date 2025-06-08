@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { configDotenv } from 'dotenv'
+import { api } from '@/trpc/react';
 
 const CheckoutPage = () => {
   const { cart, clearCart } = useCart();
@@ -13,6 +14,8 @@ const CheckoutPage = () => {
   const [orderId, setOrderId] = useState<string | null>(null);
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const router = useRouter();
+
+  const { data:user } = api.user.getUser.useQuery()
 
   // Load Razorpay script dynamically
   useEffect(() => {
@@ -125,9 +128,8 @@ const CheckoutPage = () => {
           }
         },
         prefill: {
-          name: "vanshika",
-          email: "vanshikachhikaraxyz@gmail.com",
-          contact: "9306761520",
+          name: user?.name || '',
+          email: user?.email || '',
         },
         theme: {
           color: "#3399cc",
