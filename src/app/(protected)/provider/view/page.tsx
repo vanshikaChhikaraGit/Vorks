@@ -21,7 +21,7 @@ const ViewServices = () => {
   </div>;
 
   return (
-   <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+   <div className="dark:bg-black grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
       {servicesFromProvider?.map((service) => (
         <div key={service.id} className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
           {/* Service Image */}

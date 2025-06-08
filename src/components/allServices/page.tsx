@@ -53,9 +53,7 @@ const AllServices = () => {
   return (
     <div className="space-y-12 p-4">
       {/* Popular Services */}
-      <section>
-        <h2 className="mb-6 text-2xl font-bold">Popular Services</h2>
-      </section>
+      
 
       {/* All Categories */}
       {allCategories.map((category) => {
