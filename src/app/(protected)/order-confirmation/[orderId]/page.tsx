@@ -42,7 +42,7 @@ export default async function OrderConfirmationPage({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <h2 className="text-xl font-bold mb-4">Order Details</h2>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className=" dark:bg-black bg-white p-6 rounded-lg shadow">
             <p className="mb-2">
               <span className="font-semibold">Order ID:</span> {order.transactionId}
             </p>
@@ -58,7 +58,7 @@ export default async function OrderConfirmationPage({
           </div>
 
           <h2 className="text-xl font-bold mt-6 mb-4">Items Ordered</h2>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="dark:bg-black bg-white p-6 rounded-lg shadow">
             {order.items.map((item) => (
               <div key={item.id} className="border-b py-4">
                 <h3 className="font-medium">{item.service.name}</h3>
@@ -71,7 +71,7 @@ export default async function OrderConfirmationPage({
 
         <div>
           <h2 className="text-xl font-bold mb-4">Payment Summary</h2>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className=" dark:bg-black bg-white p-6 rounded-lg shadow">
             <div className="flex justify-between mb-2">
               <span>Subtotal:</span>
               <span>₹{order.amount.toFixed(2)}</span>
