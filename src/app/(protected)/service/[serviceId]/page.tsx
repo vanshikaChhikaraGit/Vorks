@@ -10,6 +10,8 @@ import StarRating from "./starRating";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/cart";
 import { toast } from "sonner";
+import Loading from "@/components/ui/loading";
+import Error from "@/components/ui/Error";
 
 type providerSchema = {
   name: string;
@@ -87,11 +89,11 @@ try {
   }
 
   if (isLoading)
-    return <div className="flex justify-center py-20">Loading...</div>;
+    return <div ><Loading></Loading></div>;
   if (isError)
     return (
-      <div className="flex justify-center py-20 text-red-500">
-        Error loading service
+      <div >
+        <Error></Error>
       </div>
     );
   if (!service)

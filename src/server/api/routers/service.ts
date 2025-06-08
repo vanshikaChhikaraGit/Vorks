@@ -230,5 +230,22 @@ export const serviceRouter = createTRPCRouter({
         service:updatedService,
 
       })
-      })
+      }),
+      getAllServices: publicProcedure.query(async({ctx})=>{
+         return await ctx.db.service.findMany()
+      }),
+      searchServices: publicProcedure
+    .input(z.object({ query: z.string() }))
+    .query(async ({ input, ctx }) => {
+      return await ctx.db.service.findMany({
+        where: {
+          OR: [
+            { name: { contains: input.query, mode: 'insensitive' } },
+            { description: { contains: input.query, mode: 'insensitive' } },
+            { category: { contains: input.query, mode: 'insensitive' } },
+          ],
+        },
+        take: 10,
+      });
+    }),
 });

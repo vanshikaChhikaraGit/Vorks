@@ -1,6 +1,8 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import Error from '@/components/ui/Error'
+import Loading from '@/components/ui/loading'
 import { api } from '@/trpc/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -24,8 +26,8 @@ const DeleteServices = () => {
         }
         )
     
-      if (isLoading) return <div>Loading...</div>;
-      if (error) return <div>Error: {error.message}</div>;
+      if (isLoading) return <div><Loading></Loading></div>;
+      if (error) return <div><Error></Error></div>;
   const handleDelete = async({serviceId}:{serviceId:string})=>{
     try {
         console.log('delete triggered')

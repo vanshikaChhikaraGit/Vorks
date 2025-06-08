@@ -91,7 +91,7 @@ const CheckoutPage = () => {
       if (!response.ok) throw new Error(data.message || 'Failed to create payment order');
 
       const options = {
-        key: 'rzp_test_F5oAO6b5PB4ssx', // Use public key
+        key: 'RAZORPAY_SECRET_KEY', // Use public key
         amount: data.amount,
         currency: "INR",
         name: "Vorks",

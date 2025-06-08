@@ -14,7 +14,7 @@ const DefaultNavbar = () => {
         {/* logo and name  */}
         <div>
             <Image src="/logo_vorks.png" alt="Logo" width={50} height={50} className="inline-block mr-2" />
-        <Link href={'/'}>Vorks</Link>
+        <Link href={'/'} className='text-xl font-bold'>Vorks</Link>
         </div>
 
         <div className='flex items-center gap-4'>

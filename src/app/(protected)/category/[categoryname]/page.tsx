@@ -2,8 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import Error from "@/components/ui/Error";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Loading from "@/components/ui/loading";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { api } from "@/trpc/react";
@@ -106,9 +108,9 @@ const ServicesByCategory = () => {
   setFilteredServices(filtered);
 };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div><Loading></Loading></div>;
 
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div><Error></Error></div>;
 
   return (
     <div className="p-2">

@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
       { expiresIn: "1d" },
     );
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true, role:findUser.role });
     response.cookies.set({
       name: "token",
       value: token,

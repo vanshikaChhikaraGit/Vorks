@@ -16,6 +16,7 @@ import { error } from 'console'
 type loginFormData = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
+  const [loading,setLoading] = useState(false)
     const { register,handleSubmit,formState: { errors} } = useForm<loginFormData>({
         resolver: zodResolver(loginSchema),
     })
@@ -23,8 +24,10 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false) // State for toggle
 
   async function handleOnSubmit(data:loginFormData) {
-  
-    const { email, password } = data
+
+    try {
+      setLoading(true)
+       const { email, password } = data
 
     const response = await fetch('/api/auth/login', {
       method: 'POST',
@@ -33,12 +36,25 @@ export default function LoginPage() {
     })
 
     if (response.ok) {
-      router.push('/home')
+      const data = await response.json()
+      if(data.role=='CUSTOMER'){
+ router.push('/home')
+      }else{
+        router.push('/provider')
+      }
+     
     } else {
         const errorData = await response.json()
         // Handle errors, e.g., show a notification or alert
         console.error('Login failed:', errorData.error)
     }
+    } catch (error) {
+      console.log('error')
+    }finally{
+      setLoading(false)
+    }
+  
+   
   }
 
   return (
@@ -87,7 +103,7 @@ export default function LoginPage() {
               )}
             </div>
 
-            <Button type='submit' variant={'default'} className='w-full'>
+            <Button disabled={loading} type='submit' variant={'default'} className='w-full'>
               Login
             </Button>
           </form>

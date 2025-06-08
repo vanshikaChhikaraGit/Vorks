@@ -27,6 +27,7 @@ import { toast } from "sonner";
 type ServiceFormData = z.infer<typeof createServiceSchema>;
 
 const CreateServicePage = () => {
+  const [loading,setLoading] = useState(false)
     const router = useRouter()
   const {
     watch,
@@ -54,7 +55,9 @@ const category = watch("category");
   })
 
   const onSubmit = (data: ServiceFormData) => {
-    console.log("Form data:", data);
+    try {
+      setLoading(true)
+      console.log("Form data:", data);
     const { serviceName, description, price, category, duration, image,serviceLocation } = data;
     const uploadServiceToDB = uploadService.mutateAsync({
         category,
@@ -65,6 +68,12 @@ const category = watch("category");
         serviceName,
         serviceLocation
     })
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+    
   };
 
   return (
@@ -216,7 +225,7 @@ const category = watch("category");
                   </p>
                 )}
               </div>
-              <Button type="submit" className="w-full">
+              <Button disabled={loading} type="submit" className="w-full">
                 Create Service
               </Button>
             </form>

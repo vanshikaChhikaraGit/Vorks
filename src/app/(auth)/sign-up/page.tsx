@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 type signupFormData = z.infer<typeof signupSchema>
 
 export default function SignupPage() {
+  const [loading,setLoading] = useState(false)
   const { register,handleSubmit, formState:{errors},watch} = useForm<signupFormData>({
     resolver:zodResolver(signupSchema),
     defaultValues: {
@@ -26,7 +27,9 @@ export default function SignupPage() {
 const selectedRole = watch('role')
 
   async function handleOnSubmit(data: signupFormData) {
-    const { name, email, password,role } = data
+    try {
+      setLoading(true)
+        const { name, email, password,role } = data
 
     console.log(data)
 
@@ -47,6 +50,12 @@ const selectedRole = watch('role')
       // Handle errors, e.g., show a notification or alert
       console.error('Signup failed:', errorData.error)
     }
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+  
   }
 
   return (
@@ -132,7 +141,7 @@ const selectedRole = watch('role')
               </label>
             </div>
 
-            <Button type='submit' variant={'default'} className='w-full'>
+            <Button disabled={loading} type='submit' variant={'default'} className='w-full'>
               SignUp
             </Button>
           </form>

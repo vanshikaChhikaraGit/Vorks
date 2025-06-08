@@ -10,7 +10,7 @@ export default function ProtectedLayout({
 }) {
   return (
     <CartProvider>
-        <div className=" flex flex-col bg-[#EBEDE8]">
+        <div className=" flex flex-col ">
           <DefaultNavbar />
           <main className="flex-1">{children}</main>
         </div>
