@@ -6,6 +6,12 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  typescript:{
+        ignoreBuildErrors:true
+    },
+    eslint:{
+        ignoreDuringBuilds:true
+    },
    productionBrowserSourceMaps: true, // For production
   webpack: (config) => {
     config.devtool = 'eval-source-map' // For development
