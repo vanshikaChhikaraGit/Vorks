@@ -6,6 +6,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from '../ui/button'
 import { useCart } from '@/context/cart'
+import { ModeToggle } from '../ui/mode-toggle'
 
 const DefaultNavbar = () => {
     const {cart} = useCart()
@@ -19,6 +20,9 @@ const DefaultNavbar = () => {
 
         <div className='flex items-center gap-4'>
  {/* cart  */}
+ <div>
+    <ModeToggle></ModeToggle>
+ </div>
         <div>
             <Button className=''>
                 <Link href="/cart" className='flex items-center gap-2'>

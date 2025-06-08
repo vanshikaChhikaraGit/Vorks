@@ -59,10 +59,10 @@ const selectedRole = watch('role')
   }
 
   return (
-    <div className='bg-[#EBEDE8] flex h-screen items-center justify-center p-4'>
+    <div className='bg-[#EBEDE8] dark:bg-black flex h-screen items-center justify-center p-4'>
       <Card className='w-full max-w-sm'>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Create a new account</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(handleOnSubmit)} className='space-y-4'>

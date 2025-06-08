@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const HeroSection = () => {
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#EBEDE8] py-20">
+    <div className="relative h-full w-full overflow-hidden dark:bg-gray-900 bg-[#EBEDE8] py-20">
       {/* Grid Pattern */}
       <div className="absolute inset-0 -z-0">
         <InteractiveGridPattern
@@ -40,17 +40,17 @@ const HeroSection = () => {
           ></ServiceAvatar>
         </div>
         {/* middle content  */}
-        <h1 className="mb-3 flex flex-wrap justify-center gap-x-2 gap-y-1 font-bold tracking-tight text-pretty break-normal text-[#004838] sm:text-2xl md:text-5xl lg:text-6xl">
+        <h1 className="mb-3 dark:text-purple-500 flex flex-wrap justify-center gap-x-2 gap-y-1 font-bold tracking-tight text-pretty break-normal text-[#004838] text-2xl md:text-5xl lg:text-6xl">
           One tool to{" "}
-          <span className="rounded-md border-b-8 border-[#E2FB6C]">book</span>{" "}
+          <span className="rounded-md border-b-8 dark:border-white border-[#E2FB6C]">book</span>{" "}
           services and grow your work
         </h1>
-        <h2 className="mt-2 text-sm font-normal tracking-tight text-pretty break-normal md:text-lg lg:text-xl">
+        <h2 className="mt-2 dark:text-white/80 text-sm font-normal tracking-tight text-pretty break-normal md:text-lg lg:text-xl">
           Vorks is a platform that connects customers with local service
           providers and offers one-tap booking.
         </h2>
         <div>
-          <Link href={'/sign-up'}  className="inline-flex items-center p-2 border rounded-lg text-lg font-semibold text-white justify-center mt-4 bg-[#004838] hover:cursor-pointer hover:bg-green-900">
+          <Link href={'/sign-up'}  className="dark:bg-purple-500 inline-flex items-center p-2 border rounded-lg text-lg font-semibold text-white justify-center mt-4 bg-[#004838] hover:cursor-pointer hover:bg-green-900">
           
             Explore{" "}
             <ArrowRight className="shrink-0" size={15}></ArrowRight>{" "}

@@ -145,7 +145,7 @@ try {
              <span className="ml-1">{service.reviewStarRating ?? "0.0"} ratings</span>   
               </div>
 {/* review count  */}
-              <div className="ml-2 text-sm text-gray-600">
+              <div className="dark:text-white/80 ml-2 text-sm text-gray-600">
                 {service.reviewCount || "0"} reviews
               </div>
             </div>
@@ -155,17 +155,13 @@ try {
           <div className="space-y-2">
             <div className="flex items-center gap-4">
               <span className="text-2xl font-bold">₹{service.price}</span>
-              {service.price && (
-                <span className="text-lg text-gray-500 line-through">
-                  ₹{service.price}
-                </span>
-              )}
+              
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <p className="text-gray-700">
+            <p className="dark:text-white/80 text-gray-700">
               {service.description || "No description available"}
             </p>
           </div>
@@ -206,7 +202,7 @@ try {
       {/* Additional Details Section */}
       <div className="mt-16 border-t pt-8">
         <h3 className="font-bold text-lg md:text-xl lg:text-2xl">Service Details</h3>
-        <p className="mt-4 text-gray-700">
+        <p className="dark:text-white mt-4 text-gray-700">
           {service.description || "Detailed service information not available."}
         </p>
       </div>
@@ -216,7 +212,7 @@ try {
         <div className="mt-12 border-t pt-8">
           <h3 className="font-bold text-lg md:text-xl lg:text-2xl">About the Provider</h3>
           <div className="mt-4 flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 font-bold">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 font-bold dark:text-black">
               {provider.name.charAt(0).toUpperCase()}
             </div>
 
@@ -231,7 +227,7 @@ try {
       <div className="border-t pt-8 mt-12">
         <h1 className="font-bold text-lg md:text-xl lg:text-2xl">Reviews & Comments</h1>
         {/* add star review  */}
-        <div className=" flex flex-col md:flex md:items-center md:justify-between md:flex-row">
+        <div className=" flex items-center justify-between ">
           <h2 className="font-semibold text-lg mt-6">Rate this service</h2>
            <div className="flex ">
       {[1, 2, 3, 4, 5].map((star) => (
@@ -261,7 +257,7 @@ try {
    
         </div>
         {/* add comment  */}
-        <div>
+        <div className="mt-3">
             <h2 className="font-semibold text-lg mt-2">Add a comment</h2>
             <Input
             className="mt-2"
@@ -276,7 +272,7 @@ try {
                 What others say
             </h2>
             <div className="space-y-4">
-        <h3 className="text-lg font-medium">Customer Reviews</h3>
+        <h3 className="text-lg font-medium mt-3">Customer Reviews</h3>
         {comments?.length ? (
           comments?.map((review) => (
             <div key={review.id} className="bg-white p-4 rounded-lg shadow">
@@ -299,7 +295,7 @@ try {
             </div>
           ))
         ) : (
-          <p className="text-gray-500">No reviews yet</p>
+          <p className="text-gray-500 dark:text-white/70">No reviews yet</p>
         )}
       </div>
             

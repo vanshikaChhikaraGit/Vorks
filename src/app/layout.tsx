@@ -6,6 +6,7 @@ import { Geist } from "next/font/google";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/cart";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 export const metadata: Metadata = {
   title: "Vorks",
@@ -25,7 +26,13 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable}`}>
       <body className="scroll-smooth overflow-x-hidden p-0 m-0">
         <CartProvider>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <ThemeProvider
+          attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange>
+            {children}</ThemeProvider></TRPCReactProvider>
         <Toaster></Toaster>
         </CartProvider>
       </body>

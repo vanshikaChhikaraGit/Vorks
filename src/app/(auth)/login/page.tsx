@@ -58,7 +58,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className='bg-[#EBEDE8] flex h-screen items-center justify-center p-4'>
+    <div className='bg-[#EBEDE8] dark:bg-black flex h-screen items-center justify-center p-4'>
       <Card className='w-full max-w-sm'>
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>

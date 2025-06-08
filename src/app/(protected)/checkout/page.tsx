@@ -94,7 +94,7 @@ const CheckoutPage = () => {
       if (!response.ok) throw new Error(data.message || 'Failed to create payment order');
 
       const options = {
-        key: 'RAZORPAY_SECRET_KEY', // Use public key
+        key: 'rzp_test_F5oAO6b5PB4ssx',//testing key (app sent for review. Real api key to be updated in 2 days. This is just a testing key and doesn't give access to any account or payments. For development purposes only. No actual accounts attached to this.)
         amount: data.amount,
         currency: "INR",
         name: "Vorks",
@@ -164,12 +164,12 @@ const CheckoutPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-          <div className="bg-gray-50 p-6 rounded-lg">
+          <div className="dark:bg-black bg-gray-50 p-6 rounded-lg">
             {cart.map((item) => (
               <div key={item.id} className="border-b py-4">
                 <h3 className="font-medium">{item.name}</h3>
-                <p className="text-sm text-gray-600">Duration: {item.duration}</p>
-                <p className="text-sm text-gray-600">Price: ₹{item.price} x {item.quantity}</p>
+                <p className="text-sm dark:text-white/90 text-gray-600">Duration: {item.duration}</p>
+                <p className="text-sm dark:text-white/90 text-gray-600">Price: ₹{item.price} x {item.quantity}</p>
               </div>
             ))}
             

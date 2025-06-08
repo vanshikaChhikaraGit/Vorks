@@ -116,7 +116,7 @@ const ServicesByCategory = () => {
     <div className="p-2">
       <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div className="p-2 md:ml-6">
- <h1 className="mb-4 lg:text-3xl md:text-xl text-md font-bold">{serviceCategory}</h1>
+ <h1 className="mb-2 lg:text-3xl md:text-xl text-lg font-bold">{serviceCategory}</h1>
         </div>
        
 {/* //search bar  */}
@@ -308,11 +308,11 @@ const ServicesByCategory = () => {
 
               {/* Duration & CTA Button */}
               <div className="mt-4 flex items-center justify-between">
-                <span className="flex items-center text-sm font-semibold text-gray-700">
+                <span className="flex items-center text-sm font-semibold dark:text-white/80 text-gray-700">
                   <Timer />
                   {service.duration} Minutes
                 </span>
-                <span className="flex items-center text-sm font-semibold text-gray-700">
+                <span className="dark:text-white/80 flex items-center text-sm font-semibold text-gray-700">
                   {" "}
                   <MapPin />
                   {service.location}

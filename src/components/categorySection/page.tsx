@@ -8,7 +8,7 @@ const Category = () => {
   return (
     <div className='p-4 pt-8 '>
         <div className='md:flex md:flex-row md:items-center md:justify-between flex-col mb-4'>
-            <h1 className='font-bold text-xl md:text-2xl lg:text-4xl text-[#004838] '>
+            <h1 className='dark:text-white font-bold text-xl md:text-2xl lg:text-4xl text-[#004838] '>
             Select Category
         </h1>
         <h2 className='text-sm md:text-base lg:text-lg text-gray-500'>
@@ -21,7 +21,7 @@ const Category = () => {
     {categories.map((category) => (
       <CarouselItem
         key={category.id}
-        className="shrink-0 basis-0 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/6"
+        className="shrink-0  basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/6"
       >
         <div className="p-1">
           <Link 

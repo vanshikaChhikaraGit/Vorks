@@ -47,15 +47,15 @@ const HomePageHeroSection = () => {
   }
   return (
     <div>
-      <div className="relative rounded-3xl overflow-hidden bg-cover bg-center h-[500px] p-4 mt-0" 
+      <div className=" relative rounded-3xl overflow-hidden bg-cover bg-center h-[500px] p-4 mt-0" 
            style={{ backgroundImage: "url('/background.jpg')" }}>
-        <div className="absolute inset-0 bg-white/50 backdrop-blur-none flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-2">Our Services</h1>
-          <p className="font-normal text-sm">Trusted Experts for Home Services — Anytime, Anywhere</p>
+        <div className="absolute inset-0 dark:bg-black/20 backdrop-blur-none flex flex-col items-center justify-center text-center px-4">
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-2 dark:text-black">Our Services</h1>
+          <p className=" text-md text-gray-900 font-semibold dark:text-black">Trusted Experts for Home Services — Anytime, Anywhere</p>
           <div className="mt-4 flex gap-1 text-xl">❤️ 👍 🔥 💙 ⭐</div>
-          <p className="text-gray-500 text-sm">Loved from 500k+ users</p>
+          <p className="text-gray-800 text-sm">Loved from 500k+ users</p>
           
-          <div className='flex items-center border border-none rounded-lg bg-white border-[#004838] m-4 p-4 justify-between w-full max-w-2xl'>
+          <div className='flex items-center border border-none rounded-lg dark:bg-black/90 bg-white border-[#004838] m-4 p-4 justify-between w-full max-w-2xl'>
             <div>
               <GetLocation />
             </div>

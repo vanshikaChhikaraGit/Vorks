@@ -6,20 +6,21 @@ import { Button } from '../ui/button';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { ModeToggle } from '../ui/mode-toggle';
 const Navbar = () => {
     const [servicesDropdown, setServicesDropdown] = React.useState(false);
     
     return (
-    <div className='p-4 flex items-center justify-between'>
+    <div className='p-4 flex items-center justify-between dark:text-white'>
         {/* logo and name  */}
         <div>
             <Image src="/logo_vorks.png" alt="Logo" width={50} height={50} className="inline-block mr-2" />
-        <Link href={'/'} className='text-xl font-bold'>Vorks</Link>
+        <Link href={'/'} className='text-xl font-bold dark:text-white' >Vorks</Link>
         </div>
 
         {/* services dropdown  */}
         <div className='relative inline-block'>
-            <Button variant={'outline'} onClick={() => setServicesDropdown(!servicesDropdown)} className='text-gray-800 bg-[#EBEDE8] hover:text-green-600 cursor-pointer'>
+            <Button variant={'outline'} onClick={() => setServicesDropdown(!servicesDropdown)} className='text-gray-800 bg-[#EBEDE8] dark:text-white hover:text-green-600 cursor-pointer'>
                 Services <ChevronDown />
             </Button>
             {servicesDropdown && (
@@ -37,13 +38,15 @@ const Navbar = () => {
             )}
         </div>
 
+        <ModeToggle></ModeToggle>
+
         {/* about us  */}
-        <Link href={'/about'} className='text-gray-700 hover:text-green-600 transition ml-4'>
+        <Link href={'/about'} className='text-gray-700 dark:text-white hover:text-green-600 transition ml-4'>
             About Us
         </Link>
 
         {/* contact us button  */}
-        <Link href='#contact' className='text-gray-700 hover:text-green-600 transition ml-4'>
+        <Link href='#contact' className='dark:text-white text-gray-700 hover:text-green-600 transition ml-4'>
             Contact Us
         </Link>
 
